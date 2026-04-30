@@ -18,4 +18,22 @@ UnionFind *uf_construct(int n);
  */
 void uf_destroy(UnionFind *uf);
 
+/**
+ * @brief Retorna o representante do conjunto de x (com compressão de caminho)
+ *
+ * @param uf Union-Find
+ * @param x  Elemento
+ * @return Representante do conjunto
+ */
+int uf_find(UnionFind *uf, int x);
+
+/**
+ * @brief Une os conjuntos de x e y (por rank)
+ *
+ * @param uf Union-Find
+ * @param x  Elemento do primeiro conjunto
+ * @param y  Elemento do segundo conjunto
+ */
+void uf_union(UnionFind *uf, int x, int y);
+
 #endif
