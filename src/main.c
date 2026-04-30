@@ -10,10 +10,8 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc != 4) {
-        perror("Uso: ./trab1 <entrada> <k> <saida>");
+    if (argc != 4)
         exit(1);
-    }
 
     // String de comando é convertida para o inteiro k
     int k = atoi(argv[2]);
@@ -21,10 +19,8 @@ int main(int argc, char *argv[])
 
     // Leitura dos pontos
     Point **points = io_read(argv[1], &n, &m);
-    if (k < 1 || k > n) {
-        perror("Valor de k invalido");
+    if (k < 1 || k > n)
         exit(1);
-    }
 
     // TODO: graph_construct, kruskal, io_write
 

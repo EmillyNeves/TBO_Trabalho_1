@@ -12,21 +12,17 @@ static int count_commas(const char *line) {
 
 Point **io_read(const char *filename, int *n, int *m) {
     FILE *f = fopen(filename, "r");
-    if (f == NULL) {
-        perror("Erro ao abrir arquivo");
+    if (f == NULL)
         exit(1);
-    }
 
-    char   *line = NULL;
-    size_t  cap  = 0;
+    char  *line = NULL;
+    size_t cap  = 0;
 
-    /* m = numero de virgulas na primeira linha (primeira coluna e o id) */
     getline(&line, &cap, f);
     *m = count_commas(line);
 
     rewind(f);
 
-    /* primeira passagem so para contar linhas e descobrir n */
     int count = 0;
     while (getline(&line, &cap, f) != -1)
         if (line[0] != '\n') count++;
@@ -40,8 +36,7 @@ Point **io_read(const char *filename, int *n, int *m) {
     for (int idx = 0; idx < *n; idx++) {
         getline(&line, &cap, f);
 
-        /* remove o '\n' final antes de tokenizar */
-        line[strcspn(line, "\n")] = '\0';
+        line[strcspn(line, "\r\n")] = '\0';
 
         char *token = strtok(line, ",");
         char *id    = strdup(token);
@@ -56,7 +51,7 @@ Point **io_read(const char *filename, int *n, int *m) {
     }
 
     free(coord);
-    free(line); /* getline aloca internamente, deve ser liberado aqui */
+    free(line);
     fclose(f);
 
     return points;
