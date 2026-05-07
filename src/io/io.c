@@ -56,3 +56,65 @@ Point **io_read(const char *filename, int *n, int *m) {
 
     return points;
 }
+
+typedef struct group {
+    char **ids;
+    int    size;
+} Group;
+
+static int compare_ids(const void *a, const void *b)
+{
+    return strcmp(*(char **)a, *(char **)b);
+}
+
+static int compare_groups(const void *a, const void *b)
+{
+    Group *g1 = (Group *)a;
+    Group *g2 = (Group *)b;
+    return strcmp(g1->ids[0], g2->ids[0]);
+}
+
+void io_write(const char *filename, Point **points, int n, int *cluster_of, int k)
+{
+    FILE *f = fopen(filename, "w");
+    if (f == NULL)
+        exit(1);
+
+    Group *groups = (Group *)malloc(k * sizeof(Group));
+
+    for (int c = 0; c < k; c++)
+        groups[c].size = 0;
+    for (int i = 0; i < n; i++)
+        groups[cluster_of[i]].size++;
+    for (int c = 0; c < k; c++)
+        groups[c].ids = (char **)malloc(groups[c].size * sizeof(char *));
+
+    /* preenche cada grupo com os ponteiros pros ids dos pontos */
+    int *pos = (int *)calloc(k, sizeof(int));
+    for (int i = 0; i < n; i++) {
+        int c = cluster_of[i];
+        groups[c].ids[pos[c]++] = point_get_id(points[i]);
+    }
+    free(pos);
+
+    /* ordena os ids dentro de cada grupo */
+    for (int c = 0; c < k; c++)
+        qsort(groups[c].ids, groups[c].size, sizeof(char *), compare_ids);
+
+    /* ordena os grupos pelo primeiro id (que já é o menor depois do sort acima) */
+    qsort(groups, k, sizeof(Group), compare_groups);
+
+    for (int c = 0; c < k; c++) {
+        for (int i = 0; i < groups[c].size; i++) {
+            if (i > 0) fputc(',', f);
+            fputs(groups[c].ids[i], f);
+        }
+        fputc('\n', f);
+    }
+
+    for (int c = 0; c < k; c++)
+        free(groups[c].ids);
+    free(groups);
+
+    fclose(f);
+}
