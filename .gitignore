@@ -1,3 +1,4 @@
 trab1
 src/**/*.o
 saida.txt
+tests/results/

@@ -55,9 +55,24 @@ void graph_destroy(Graph *g)
     free(g);
 }
 
+static int compare_edges(const void *a, const void *b)
+{
+    Edge *e1 = (Edge *)a;
+    Edge *e2 = (Edge *)b;
+    if (e1->edge_weight < e2->edge_weight) return -1;
+    if (e1->edge_weight > e2->edge_weight) return 1;
+    return 0;
+}
+
+void graph_sort_edges(Graph *g)
+{
+    qsort(g->edges_matrix, g->num_edges, sizeof(Edge), compare_edges);
+}
+
 Point **graph_get_points(Graph *g)   { return g->points; }
 int     graph_get_num_points(Graph *g) { return g->num_points; }
 Edge   *graph_get_edges(Graph *g)    { return g->edges_matrix; }
+Edge   *graph_get_edge(Graph *g, int i) { return &g->edges_matrix[i]; }
 int     graph_get_num_edges(Graph *g)  { return g->num_edges; }
 
 double edge_get_weight(Edge *e) { return e->edge_weight; }

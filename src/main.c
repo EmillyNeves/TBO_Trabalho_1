@@ -22,7 +22,14 @@ int main(int argc, char *argv[])
     if (k < 1 || k > n)
         exit(1);
 
-    // TODO: graph_construct, kruskal, io_write
+    Graph *g = graph_construct(points, n);
+    graph_sort_edges(g);
+
+    int *cluster_of = kruskal_solve(g, k);
+    io_write(argv[3], points, n, cluster_of, k);
+
+    free(cluster_of);
+    graph_destroy(g);
 
     for (int i = 0; i < n; i++)
         point_destroy(points[i]);

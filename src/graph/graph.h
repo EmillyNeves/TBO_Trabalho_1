@@ -23,6 +23,13 @@ Graph *graph_construct(Point **points, int n);
 void graph_destroy(Graph *g);
 
 /**
+ * @brief Ordena o vetor de arestas do grafo por peso crescente (qsort)
+ *
+ * @param g Grafo
+ */
+void graph_sort_edges(Graph *g);
+
+/**
  * @brief Retorna o array de pontos do grafo
  *
  * @param g Grafo
@@ -45,6 +52,15 @@ int graph_get_num_points(Graph *g);
  * @return Array de arestas
  */
 Edge *graph_get_edges(Graph *g);
+
+/**
+ * @brief Retorna a i-ésima aresta do grafo
+ *
+ * @param g Grafo
+ * @param i Índice da aresta
+ * @return Ponteiro para a aresta
+ */
+Edge *graph_get_edge(Graph *g, int i);
 
 /**
  * @brief Retorna o número de arestas do grafo
