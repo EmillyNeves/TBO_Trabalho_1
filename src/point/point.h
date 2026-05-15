@@ -26,7 +26,7 @@ void point_destroy(Point *p);
  * @param p Ponto
  * @return String com o id
  */
-char *point_get_id(Point *p);
+char *p_get_id(Point *p);
 
 /**
  * @brief Retorna o vetor de coordenadas do ponto
@@ -34,7 +34,7 @@ char *point_get_id(Point *p);
  * @param p Ponto
  * @return Array de doubles com as coordenadas
  */
-double *point_get_coord(Point *p);
+double *p_get_coord(Point *p);
 
 /**
  * @brief Retorna o número de dimensões do ponto
@@ -42,6 +42,6 @@ double *point_get_coord(Point *p);
  * @param p Ponto
  * @return Número de dimensões
  */
-int point_get_dim(Point *p);
+int p_get_dim(Point *p);
 
 #endif
