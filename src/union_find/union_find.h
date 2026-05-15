@@ -19,7 +19,7 @@ UnionFind *uf_construct(int n);
 void uf_destroy(UnionFind *uf);
 
 /**
- * @brief Retorna o representante do conjunto de x (com compressão de caminho)
+ * @brief Retorna o representante do conjunto de x (com path halving)
  *
  * @param uf Union-Find
  * @param x  Elemento
@@ -28,7 +28,7 @@ void uf_destroy(UnionFind *uf);
 int uf_find(UnionFind *uf, int x);
 
 /**
- * @brief Une os conjuntos de x e y (por rank)
+ * @brief Une os conjuntos de x e y (weighted quick-union por tamanho)
  *
  * @param uf Union-Find
  * @param x  Elemento do primeiro conjunto
