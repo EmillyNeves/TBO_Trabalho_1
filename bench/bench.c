@@ -54,13 +54,13 @@ int main(int argc, char *argv[])
     double t3 = now_sec();
 
     /* 4) Obtencao da MST (loop de Kruskal com parada antecipada em n-k arestas) */
-    int        num_edges = graph_get_num_edges(g);
+    long long  num_edges = g_get_num_edges(g);
     UnionFind *uf        = uf_construct(n);
     int        count     = 0;
-    for (int i = 0; i < num_edges && count < n - k; i++) {
-        Edge *e = graph_get_edge(g, i);
-        int   u = edge_get_p1(e);
-        int   v = edge_get_p2(e);
+    for (long long i = 0; i < num_edges && count < n - k; i++) {
+        Edge *e = g_get_edge(g, i);
+        int   u = ed_get_p1(e);
+        int   v = ed_get_p2(e);
         if (uf_find(uf, u) != uf_find(uf, v)) {
             uf_union(uf, u, v);
             count++;
