@@ -1,7 +1,8 @@
-#include "union_find.h"
 #include <stdlib.h>
+#include "union_find.h"
 
-struct union_find {
+struct union_find
+{
     int *parent;
     int *rank;
 };
@@ -9,14 +10,14 @@ struct union_find {
 UnionFind *uf_construct(int n)
 {
     UnionFind *uf = (UnionFind *)malloc(sizeof(UnionFind));
-    uf->parent    = (int *)malloc(n * sizeof(int));
-    uf->rank      = (int *)malloc(n * sizeof(int));
+    uf->parent = (int *)malloc(n * sizeof(int));
+    uf->rank = (int *)malloc(n * sizeof(int));
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
+        uf->rank[i] = 0;
         uf->parent[i] = i;
-        uf->rank[i]   = 0;
     }
-
     return uf;
 }
 
@@ -29,25 +30,37 @@ void uf_destroy(UnionFind *uf)
 
 int uf_find(UnionFind *uf, int x)
 {
-    if (uf->parent[x] != x)
-        uf->parent[x] = uf_find(uf, uf->parent[x]); /* compressão de caminho */
-    return uf->parent[x];
+    // primeiro acha a raiz
+    int raiz = x;
+    while (raiz != uf->parent[raiz])
+        raiz = uf->parent[raiz];
+
+    // path compression: faz todo nó do caminho apontar pra raiz
+    while (x != raiz)
+    {
+        int proximo = uf->parent[x];
+        uf->parent[x] = raiz;
+        x = proximo;
+    }
+    return raiz;
 }
 
 void uf_union(UnionFind *uf, int x, int y)
 {
-    int rx = uf_find(uf, x);
-    int ry = uf_find(uf, y);
+    int rX = uf_find(uf, x);
+    int rY = uf_find(uf, y);
 
-    if (rx == ry) return;
+    if (rX == rY)
+        return;
 
-    /* union by rank: árvore menor pendurada na maior */
-    if (uf->rank[rx] < uf->rank[ry])
-        uf->parent[rx] = ry;
-    else if (uf->rank[rx] > uf->rank[ry])
-        uf->parent[ry] = rx;
-    else {
-        uf->parent[ry] = rx;
-        uf->rank[rx]++;
+    // a arvore de menor rank vai sob a de maior rank, se empatepa escolhe um e incrementa o rank do vencedor
+    if (uf->rank[rX] < uf->rank[rY])
+        uf->parent[rX] = rY;
+    else if (uf->rank[rX] > uf->rank[rY])
+        uf->parent[rY] = rX;
+    else
+    {
+        uf->parent[rY] = rX;
+        uf->rank[rX] ++;
     }
 }

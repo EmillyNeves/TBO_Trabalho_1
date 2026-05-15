@@ -3,7 +3,7 @@
 
 #include "../point/point.h"
 
-typedef struct edge  Edge;
+typedef struct edge Edge;
 typedef struct graph Graph;
 
 /**
@@ -35,7 +35,7 @@ void graph_sort_edges(Graph *g);
  * @param g Grafo
  * @return Array de ponteiros para os pontos
  */
-Point **graph_get_points(Graph *g);
+Point **g_get_points(Graph *g);
 
 /**
  * @brief Retorna o número de pontos do grafo
@@ -43,7 +43,7 @@ Point **graph_get_points(Graph *g);
  * @param g Grafo
  * @return Número de pontos
  */
-int graph_get_num_points(Graph *g);
+int g_get_num_points(Graph *g);
 
 /**
  * @brief Retorna o vetor de arestas do grafo
@@ -51,7 +51,7 @@ int graph_get_num_points(Graph *g);
  * @param g Grafo
  * @return Array de arestas
  */
-Edge *graph_get_edges(Graph *g);
+Edge *g_get_edges(Graph *g);
 
 /**
  * @brief Retorna a i-ésima aresta do grafo
@@ -60,15 +60,17 @@ Edge *graph_get_edges(Graph *g);
  * @param i Índice da aresta
  * @return Ponteiro para a aresta
  */
-Edge *graph_get_edge(Graph *g, int i);
+Edge *g_get_edge(Graph *g, long long i);
 
 /**
  * @brief Retorna o número de arestas do grafo
  *
+ * Usa long long porque n*(n-1)/2 estoura int para n >= 46k
+ *
  * @param g Grafo
  * @return Número de arestas
  */
-int graph_get_num_edges(Graph *g);
+long long g_get_num_edges(Graph *g);
 
 /**
  * @brief Retorna o peso de uma aresta
@@ -76,7 +78,7 @@ int graph_get_num_edges(Graph *g);
  * @param e Aresta
  * @return Peso da aresta
  */
-double edge_get_weight(Edge *e);
+double ed_get_weight(Edge *e);
 
 /**
  * @brief Retorna o índice do primeiro ponto da aresta
@@ -84,7 +86,7 @@ double edge_get_weight(Edge *e);
  * @param e Aresta
  * @return Índice p1
  */
-int edge_get_p1(Edge *e);
+int ed_get_p1(Edge *e);
 
 /**
  * @brief Retorna o índice do segundo ponto da aresta
@@ -92,6 +94,6 @@ int edge_get_p1(Edge *e);
  * @param e Aresta
  * @return Índice p2
  */
-int edge_get_p2(Edge *e);
+int ed_get_p2(Edge *e);
 
 #endif
